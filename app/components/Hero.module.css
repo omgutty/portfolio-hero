@@ -1,0 +1,385 @@
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 640px;
+  overflow: hidden;
+  background: #0A0A0B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Three.js canvas ── */
+.threeCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Video layer ── */
+.videoWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.videoReady {
+  opacity: 1;
+}
+
+/* Cinematic vignette + darkening overlays */
+.videoOverlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 90% at 50% 50%, transparent 20%, rgba(10,10,11,0.55) 100%),
+    linear-gradient(to bottom,
+      rgba(10,10,11,0.55) 0%,
+      rgba(10,10,11,0.10) 30%,
+      rgba(10,10,11,0.10) 65%,
+      rgba(10,10,11,0.80) 100%
+    );
+  z-index: 3;
+}
+
+/* Letterbox bars — cinematic feel */
+.letterboxTop,
+.letterboxBottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: #0A0A0B;
+  z-index: 4;
+  transition: height 1.2s cubic-bezier(0.77, 0, 0.18, 1);
+}
+.letterboxTop { top: 0; }
+.letterboxBottom { bottom: 0; }
+
+.letterboxOpen .letterboxTop,
+.letterboxOpen .letterboxBottom {
+  height: 0;
+}
+
+.letterboxClosed .letterboxTop,
+.letterboxClosed .letterboxBottom {
+  height: 12%;
+}
+
+/* ── Content ── */
+.content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  padding: 0 6vw 8vh;
+  pointer-events: none;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.eyebrowDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  flex-shrink: 0;
+}
+
+.eyebrowText {
+  font-size: clamp(11px, 1.2vw, 13px);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.headline {
+  font-size: clamp(2.8rem, 6.5vw, 7rem);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--color-white);
+  margin-bottom: 0.2em;
+  opacity: 0;
+  transform: translateY(30px);
+  max-width: 14ch;
+}
+
+.headlineAccent {
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+}
+
+.subheadline {
+  font-size: clamp(0.95rem, 1.6vw, 1.25rem);
+  font-weight: 300;
+  color: var(--color-white-80);
+  line-height: 1.6;
+  max-width: 44ch;
+  margin-bottom: 3rem;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.ctas {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: all;
+}
+
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: var(--color-gold);
+  color: #0A0A0B;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.ctaPrimary:hover {
+  background: var(--color-gold-light);
+  transform: translateY(-1px);
+}
+
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 28px;
+  background: transparent;
+  color: var(--color-white-80);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--color-white-20);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.ctaSecondary:hover {
+  border-color: var(--color-white-50);
+  color: var(--color-white);
+  transform: translateY(-1px);
+}
+
+/* ── Right-side stats ── */
+.stats {
+  position: absolute;
+  right: 6vw;
+  bottom: 8vh;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2rem;
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.stat {
+  text-align: right;
+}
+
+.statNumber {
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 600;
+  color: var(--color-white);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.statLabel {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-white-50);
+  margin-top: 4px;
+}
+
+/* ── Horizontal rule separator between stats ── */
+.statDivider {
+  width: 40px;
+  height: 1px;
+  background: var(--color-white-20);
+  align-self: flex-end;
+}
+
+/* ── Scroll cue ── */
+.scrollCue {
+  position: absolute;
+  bottom: 3vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+}
+
+.scrollCueText {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-white-50);
+}
+
+.scrollLine {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--color-white-50), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.1); }
+}
+
+/* ── Top navigation ── */
+.nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.5rem 6vw;
+  opacity: 0;
+}
+
+.navLogo {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.navLogoAccent {
+  color: var(--color-gold);
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.navLinks a {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-white-50);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.navLinks a:hover {
+  color: var(--color-white);
+}
+
+/* ── Noise grain overlay ── */
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .content {
+    padding: 0 6vw 14vh;
+  }
+
+  .stats {
+    display: none;
+  }
+
+  .headline {
+    font-size: clamp(2.4rem, 11vw, 4rem);
+  }
+
+  .navLinks {
+    display: none;
+  }
+
+  .letterboxClosed .letterboxTop,
+  .letterboxClosed .letterboxBottom {
+    height: 7%;
+  }
+}
+
+@media (max-width: 480px) {
+  .ctas {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
