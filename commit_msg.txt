@@ -1,9 +1,0 @@
-feat: full portfolio with LinkedIn, GitHub, skills, projects, resume
-
-- Add data layer (profile, social, skills, projects)
-- Add About, Skills, Projects, Contact sections
-- Enhanced SEO metadata, sitemap, robots.txt
-- Resume download with proper headers
-- Vercel deployment config
-
-Co-authored-by: CommandCodeBot <noreply@commandcode.ai>
