@@ -1,0 +1,137 @@
+.section {
+  position: relative;
+  padding: 8rem 6vw;
+  background: #0A0A0B;
+}
+
+.inner {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.header {
+  margin-bottom: 3.5rem;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.heading {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  color: var(--color-white);
+  margin-bottom: 1rem;
+}
+
+.accent {
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sub {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--color-white-50);
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.channels {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+}
+
+.channel {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--color-white-08);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--color-white-80);
+  text-decoration: none;
+  text-align: left;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.channel:hover {
+  border-color: var(--color-white-20);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.channel:hover .arrow {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.channelLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-white);
+  margin-bottom: 2px;
+}
+
+.channelValue {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--color-white-50);
+}
+
+.arrow {
+  margin-left: auto;
+  font-size: 18px;
+  color: var(--color-gold);
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.resume {
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-white-08);
+}
+
+.resumeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 14px 32px;
+  background: var(--color-gold);
+  color: #0A0A0B;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.resumeBtn:hover {
+  background: var(--color-gold-light);
+  transform: translateY(-1px);
+}
+
+.resumeNote {
+  font-size: 12px;
+  color: var(--color-white-50);
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 5rem 6vw;
+  }
+}
